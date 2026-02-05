@@ -40,7 +40,9 @@
   border: 1px solid rgba(11,43,37,0.35);
   color: var(--verde-escuro-3-0b2b25);
   border-radius: 6px;
-  padding: 12px 22px;
+  min-width: 360px;
+  font-size: 19px;
+  padding: 14px 30px;
   font-weight: 700;
   cursor: pointer;
 }

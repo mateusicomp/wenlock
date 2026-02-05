@@ -18,6 +18,10 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const port = Number(config.get("PORT") ?? 3001);
 
+  app.enableCors({
+    origin: ["http://localhost:3000"],
+  });
+  
   const swaggerTitle = config.get("SWAGGER_TITLE") ?? "WENLOCK API";
   const swaggerDesc = config.get("SWAGGER_DESC") ?? "CRUD de usuários";
   const swaggerVersion = config.get("SWAGGER_VERSION") ?? "1.0.0";

@@ -2,6 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { Toast } from "@/components/ui/Toast";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { UserViewDrawer } from "@/components/users/UserViewDrawer";
+import { UserFormModal } from "@/components/users/UserFormModal";
+import { deleteUser, fetchUserById, type UserDTO } from "@/lib/api";
 import { AppShell } from "@/components/layout/AppShell";
 import { fetchUsers, type UsersListResponse } from "@/lib/api";
 import "@/styles/users.css";
@@ -22,6 +27,9 @@ export default function UsersPage() {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
 
+  // ✅ novo: depois do primeiro foco, mantém a tabela aberta
+  const [opened, setOpened] = useState(false);
+
   // server paging state (source of truth)
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(15);
@@ -31,8 +39,23 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // regra do XD: quando foca em pesquisar, já mostra a lista (mesmo sem digitar)
-  const showTable = focused || query.trim().length > 0;
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastType, setToastType] = useState<"success" | "warning">("success");
+  const [toastMsg, setToastMsg] = useState("");
+
+  const [viewOpen, setViewOpen] = useState(false);
+  const [viewUser, setViewUser] = useState<UserDTO | null>(null);
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [editUser, setEditUser] = useState<UserDTO | null>(null);
+
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<UserDTO | null>(null);
+
+  // ✅ regra final:
+  // - abre ao focar na pesquisa
+  // - continua aberta depois (opened), mesmo clicando em ações/fora
+  const showTable = opened || query.trim().length > 0;
 
   // debounce para não bater no backend a cada tecla
   const debouncedQuery = useDebouncedValue(query, 300);
@@ -45,14 +68,9 @@ export default function UsersPage() {
     setPage(1);
   }, [perPage, debouncedQuery]);
 
-  // Fetch: só busca quando showTable for true (foco ou texto)
+  // Fetch: só busca quando showTable for true
   useEffect(() => {
-    if (!showTable) {
-      setData(null);
-      setErrorMsg(null);
-      setLoading(false);
-      return;
-    }
+    if (!showTable) return;
 
     abortRef.current?.abort();
     const controller = new AbortController();
@@ -69,8 +87,7 @@ export default function UsersPage() {
     })
       .then((res) => setData(res))
       .catch((err) => {
-        // abort não é erro real
-        if (String(err?.name) === "AbortError") return;
+        if (String(err?.name) === "AbortError") return; // abort não é erro real
         setErrorMsg(err?.message ?? "Erro ao buscar usuários.");
       })
       .finally(() => setLoading(false));
@@ -85,6 +102,69 @@ export default function UsersPage() {
   function goTo(p: number) {
     const next = Math.max(1, Math.min(totalPages, p));
     setPage(next);
+  }
+
+  function showToast(type: "success" | "warning", msg: string) {
+    setToastType(type);
+    setToastMsg(msg);
+    setToastOpen(true);
+  }
+
+  async function reloadUsers() {
+    const controller = new AbortController();
+    const res = await fetchUsers({
+      search: debouncedQuery.trim() ? debouncedQuery.trim() : undefined,
+      page,
+      limit: perPage,
+      signal: controller.signal,
+    });
+    setData(res);
+  }
+
+  async function handleView(u: any) {
+    try {
+      const full = await fetchUserById(u.id);
+      setViewUser(full);
+      setViewOpen(true);
+    } catch (e: any) {
+      alert(e?.message ?? "Erro ao carregar usuário.");
+    }
+  }
+
+  async function handleEdit(u: any) {
+    try {
+      const full = await fetchUserById(u.id);
+      setEditUser(full);
+      setEditOpen(true);
+    } catch (e: any) {
+      alert(e?.message ?? "Erro ao carregar usuário.");
+    }
+  }
+
+  function handleDeleteClick(u: any) {
+    setDeleteTarget(u);
+    setConfirmDeleteOpen(true);
+  }
+
+  async function confirmDeleteYes() {
+    try {
+      if (!deleteTarget) return;
+      await deleteUser(deleteTarget.id);
+
+      showToast("success", "Usuário excluído com sucesso!");
+      setConfirmDeleteOpen(false);
+      setDeleteTarget(null);
+
+      await reloadUsers();
+    } catch (e: any) {
+      alert(e?.message ?? "Erro ao excluir usuário.");
+    }
+  }
+
+  function confirmDeleteNo() {
+    setConfirmDeleteOpen(false);
+    setDeleteTarget(null);
+    showToast("warning", "Exclusão cancelada");
   }
 
   return (
@@ -105,7 +185,10 @@ export default function UsersPage() {
             placeholder="Pesquisa"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => setFocused(true)}
+            onFocus={() => {
+              setFocused(true);
+              setOpened(true); // ✅ mantém tabela aberta após o primeiro foco
+            }}
             onBlur={() => setFocused(false)}
           />
         </div>
@@ -144,13 +227,42 @@ export default function UsersPage() {
                     <div className="cellName">{u.name}</div>
 
                     <div className="cellActions">
-                      <button className="iconBtn" type="button" title="Ver">
+                      <button
+                        className="iconBtn"
+                        type="button"
+                        title="Ver"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleView(u);
+                        }}
+                      >
                         👁
                       </button>
-                      <button className="iconBtn" type="button" title="Editar">
+
+                      <button
+                        className="iconBtn"
+                        type="button"
+                        title="Editar"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleEdit(u);
+                        }}
+                      >
                         ✏
                       </button>
-                      <button className="iconBtn" type="button" title="Excluir">
+
+                      <button
+                        className="iconBtn"
+                        type="button"
+                        title="Excluir"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleDeleteClick(u);
+                        }}
+                      >
                         🗑
                       </button>
                     </div>
@@ -218,6 +330,45 @@ export default function UsersPage() {
           </>
         )}
       </section>
+
+      <UserViewDrawer
+        open={viewOpen}
+        user={viewUser}
+        onClose={() => {
+          setViewOpen(false);
+          setViewUser(null);
+        }}
+      />
+
+      <UserFormModal
+        open={editOpen}
+        mode="edit"
+        initialUser={editUser}
+        onClose={() => {
+          setEditOpen(false);
+          setEditUser(null);
+        }}
+        onCancelConfirmed={() => showToast("warning", "Edição cancelada")}
+        onSuccess={async () => {
+          showToast("success", "Edição realizada!");
+          await reloadUsers();
+        }}
+      />
+
+      <ConfirmModal
+        open={confirmDeleteOpen}
+        title="Deseja excluir?"
+        description="O usuário será excluído."
+        onCancel={confirmDeleteNo}
+        onConfirm={confirmDeleteYes}
+      />
+
+      <Toast
+        open={toastOpen}
+        type={toastType}
+        message={toastMsg}
+        onClose={() => setToastOpen(false)}
+      />
     </AppShell>
   );
 }

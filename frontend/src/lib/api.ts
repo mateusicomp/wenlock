@@ -63,3 +63,50 @@ export async function createUser(payload: CreateUserInput) {
 
   return res.json();
 }
+
+export type UserDTO = {
+  id: string;
+  name: string;
+  email: string;
+  registration: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export async function fetchUserById(id: string): Promise<UserDTO> {
+  const res = await fetch(`${API_BASE}/users/${id}`, { cache: "no-store" });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Failed to fetch user (${res.status}): ${text}`);
+  }
+  return res.json();
+}
+
+export type UpdateUserInput = {
+  name: string;
+  email: string;
+  registration: string;
+  password?: string; 
+};
+
+export async function updateUser(id: string, payload: UpdateUserInput) {
+  const res = await fetch(`${API_BASE}/users/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Failed to update user (${res.status}): ${text}`);
+  }
+  return res.json();
+}
+
+export async function deleteUser(id: string) {
+  const res = await fetch(`${API_BASE}/users/${id}`, { method: "DELETE" });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Failed to delete user (${res.status}): ${text}`);
+  }
+  return true;
+}

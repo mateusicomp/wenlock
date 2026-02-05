@@ -1,0 +1,77 @@
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.08);
+  z-index: 80;
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 360px;
+  background: #fff;
+  box-shadow: -8px 0 18px rgba(0,0,0,0.16);
+  padding: 18px 18px 12px 18px;
+}
+
+.drawerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.drawerTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--verde-escuro-3-0b2b25);
+}
+
+.drawerClose {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.65;
+}
+
+.drawerSection {
+  margin-top: 14px;
+}
+
+.drawerSectionTitle {
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0.8;
+}
+
+.drawerHr {
+  height: 1px;
+  background: rgba(0,0,0,0.12);
+  margin: 8px 0 12px 0;
+}
+
+.drawerGrid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.drawerGrid1 {
+  margin-top: 14px;
+}
+
+.drawerLabel {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.drawerValue {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--verde-escuro-3-0b2b25);
+}

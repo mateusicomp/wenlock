@@ -18,7 +18,6 @@ Sistema de CRUD para gerenciamento de usuários (cadastro, listagem com busca/pa
 
 ### Frontend
 - **Next.js (React) + TypeScript**
-- **Tailwind CSS**
 - Fetch API (integração com backend)
 
 ---

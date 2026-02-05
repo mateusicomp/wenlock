@@ -1,0 +1,60 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.75);
+  display: grid;
+  place-items: center;
+  z-index: 90;
+}
+
+.modalCard {
+  width: 320px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0px 3px 12px rgba(0,0,0,0.16);
+  padding: 18px 18px 16px 18px;
+  text-align: center;
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--verde-escuro-3-0b2b25);
+  margin-bottom: 8px;
+}
+
+.modalDesc {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 16px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn {
+  min-width: 86px;
+  height: 34px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btnOutline {
+  background: #fff;
+  border: 1px solid rgba(11,43,37,0.45);
+  color: var(--verde-escuro-3-0b2b25);
+}
+
+.btnPrimary {
+  background: var(--unnamed-color-0290a4);
+  border: 1px solid var(--unnamed-color-0290a4);
+  color: #fff;
+}
+
+.btnPrimary:hover { background: var(---00606d-hover); }

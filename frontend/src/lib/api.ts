@@ -41,3 +41,25 @@ export async function fetchUsers(params: {
 
   return res.json();
 }
+
+export type CreateUserInput = {
+  name: string;
+  email: string;
+  registration: string;
+  password: string;
+};
+
+export async function createUser(payload: CreateUserInput) {
+  const res = await fetch(`${API_BASE}/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Failed to create user (${res.status}): ${text}`);
+  }
+
+  return res.json();
+}

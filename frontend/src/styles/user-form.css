@@ -1,0 +1,153 @@
+.breadcrumb {
+  font-size: 15px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.formTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.backBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  opacity: 0.8;
+}
+
+.formTitle {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--verde-escuro-3-0b2b25);
+}
+
+.formCard {
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0px 3px 5px #15223214;
+  padding: 14px;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 800;
+  opacity: 1.0;
+  margin-bottom: 10px;
+}
+
+.hr {
+  height: 1px;
+  background: rgba(0,0,0,0.12);
+  margin: 12px 0;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.grid1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.field {
+  position: relative;
+  background: #f3f3f3;
+  border-radius: 4px;
+  padding: 10px 10px 8px 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.label {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+}
+
+.helper {
+  font-size: 12px;
+  opacity: 0.8;
+  text-align: right;
+  margin-top: 6px;
+}
+
+.fieldError {
+  border-color: rgba(176,0,32,0.35);
+}
+
+.errorText {
+  font-size: 12px;
+  color: #b00020;
+  margin-top: 6px;
+}
+
+.eyeBtn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btnCancel {
+  height: 34px;
+  min-width: 110px;
+  border-radius: 6px;
+  border: 1px solid rgba(11,43,37,0.45);
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btnSave {
+  height: 34px;
+  min-width: 110px;
+  border-radius: 6px;
+  border: 1px solid var(--unnamed-color-0290a4);
+  background: var(--unnamed-color-0290a4);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btnSave:disabled {
+  background: rgba(0,0,0,0.10);
+  border-color: rgba(0,0,0,0.10);
+  color: rgba(0,0,0,0.35);
+  cursor: not-allowed;
+}

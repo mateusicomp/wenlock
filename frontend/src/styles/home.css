@@ -1,0 +1,50 @@
+.homeCard {
+  background: var(--full-branco-ffffff);
+  border-radius: 6px;
+  padding: 18px 18px 22px 18px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.homeHeader {
+  margin-bottom: 12px;
+}
+
+.greeting {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.date {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.heroWrap {
+  display: grid;
+  place-items: center;
+  padding: 20px 0 14px 0;
+}
+
+.heroImg {
+  max-width: 540px;
+  width: 100%;
+  height: auto;
+}
+
+.welcomeBtn {
+  margin: 0 auto;
+  display: block;
+  background: transparent;
+  border: 1px solid rgba(11,43,37,0.35);
+  color: var(--verde-escuro-3-0b2b25);
+  border-radius: 6px;
+  padding: 12px 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.welcomeBtn:hover {
+  border-color: var(---00606d-hover);
+}

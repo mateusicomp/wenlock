@@ -1,0 +1,88 @@
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--unnamed-color-0d1931);
+  color: var(--full-branco-ffffff);
+  padding: 20px 16px;
+  position: relative;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--unnamed-color-00aac1);
+}
+
+.brand .dot {
+  color: var(--full-branco-ffffff);
+}
+
+.nav {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--full-branco-ffffff);
+  opacity: 0.9;
+}
+
+.navItemActive {
+  background: var(--unnamed-color-0290a4);
+  color: var(--full-branco-ffffff);
+  opacity: 1;
+}
+
+.sidebarFooter {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 18px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.content {
+  padding: 18px 22px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--unnamed-color-0290a4);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: white;
+  font-size: 13px;
+  border: 2px solid rgba(255,255,255,0.25);
+}
+
+.pageTitle {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: var(--verde-escuro-3-0b2b25);
+}

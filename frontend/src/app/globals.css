@@ -1,42 +1,11 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@/styles/xd-tokens.css";
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+/* reset leve */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+  font-family: var(--unnamed-font-family-manrope), var(--font-manrope), system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--unnamed-color-f0f0f0);
+  color: var(--verde-escuro-3-0b2b25);
 }

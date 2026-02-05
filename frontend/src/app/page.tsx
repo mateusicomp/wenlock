@@ -1,65 +1,51 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Topbar } from "@/components/layout/Topbar";
+import "@/styles/layout.css";
+import "@/styles/home.css";
 
-export default function Home() {
+function formatPtBrDate(d: Date) {
+  return d.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export default function HomePage() {
+  const userName = "Millena"; 
+  const today = formatPtBrDate(new Date());
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="layout">
+      <Sidebar />
+
+      <main className="content">
+        <Topbar />
+
+        <h1 className="pageTitle">Home</h1>
+
+        <section className="homeCard">
+          <div className="homeHeader">
+            <p className="greeting">Olá {userName}!</p>
+            <div className="date">{today}</div>
+          </div>
+
+          <div className="heroWrap">
             <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/img/group-669.jpg"
+              alt="Ilustração de boas-vindas WenLock"
+              width={540}
+              height={451}
+              className="heroImg"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </div>
+
+          <button className="welcomeBtn" type="button">
+            Bem-vindo ao WenLock!
+          </button>
+        </section>
       </main>
     </div>
   );
